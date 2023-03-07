@@ -11,28 +11,29 @@ datasource db {
 }
 
 
-model Student{
-  id String @id  @default(uuid())
-  name String 
-  age Int
-  major String
-  student Classroom[]
-
-  
+model Teacher {
+  id             String     @id @default(uuid())
+  username       String
+  phone          String
+  Specialization String
+  classRoom_id   String
+  classRoom      ClassRoom? @relation(fields: [classRoom_id], references: [id])
 }
 
-model Teacher{
-  id String @id  @default(uuid())
-  TeaName String 
-  teacher Classroom[]
-
-  
+model Student {
+  id           String     @id @default(uuid())
+  username     String
+  ring         String
+  classRoom_id String
+  classRoom    ClassRoom? @relation(fields: [classRoom_id], references: [id])
 }
-model Classroom{
-  id String @id  @default(uuid())
 
-  ClassName String 
-  studentID String
+model ClassRoom {
+  id      String    @id @default(uuid())
+  name    String
+  student Student[]
+  teacher Teacher[]
+}
   TeacherID String
   student  Student   @relation(fields: [studentID], references: [id])
   teacher Teacher @relation(fields: [TeacherID], references: [id])
